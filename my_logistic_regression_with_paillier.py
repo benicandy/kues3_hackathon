@@ -95,19 +95,23 @@ def load_dataset():
         y = np.append(y, 1)
     
     #print(X)
-    print(X[:1])
-    print(X.shape)
+    #print(X[:1])
+    #print(X.shape)
     #print(y)
-    print(y[:2])
-    print(y.shape)
-
-    scaler = MinMaxScaler()
-    X = scaler.fit_transform(X)
+    #print(y[:2])
+    #print(y.shape)
 
     X_max = X.max(axis=0)
     X_min = X.min(axis=0)
 
-    print(X[:1])
+    scaler = MinMaxScaler()
+    X = scaler.fit_transform(X)
+
+    
+    #print(X_max.shape)
+    #print(X_min)
+
+    #print(X[:1])
 
     #x_train = np.concatenate((X[:5], X[50:55]))
     #y_train = np.concatenate((y[:5], y[50:55]))
@@ -324,13 +328,14 @@ def prediction_api(fname, weights, X_max, X_min):
     tmp_vec = np.zeros(26)
     for i in range(img.shape[0]):
         tmp_vec[int(img[i]/10)] = tmp_vec[int(img[i]/10)] + 1
-    print("tmp_vec")
-    print(tmp_vec)
-    print(X_max)
+    #print("tmp_vec")
+    #print(tmp_vec)
+    #print(X_max)
     X = np.append(X, [tmp_vec], axis=0)
-    X = (X - [X_min]) / ([X_max] - [X_min])
+    X = (X - X_min) / (X_max - X_min)
+
     
-    print(X)
+    #print(X)
 
     # 鍵ペア取得
     public_key, private_key = pl.generate_paillier_keypair(n_length=256)
@@ -348,6 +353,6 @@ if __name__ == '__main__':
     elapsed_time = time.time() - start
     print ("elapsed_time:{0}".format(elapsed_time) + "[sec]")
 
-    # unfinished
-    fname = "original.jpg"
+    print("=========== Prediction part #3 ===========")
+    fname = "out.jpg"
     prediction_api(fname, weights, X_max, X_min)
