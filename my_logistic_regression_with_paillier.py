@@ -15,7 +15,6 @@ import glob, os
 # 画像をリサイズする
 def resize(input_parent, input_fname, label):
     img = cv2.imread(input_parent + "/" + input_fname)
-    #img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     dst = cv2.resize(img, dsize=(100, 100))
     if not os.path.exists("./resize" + label):
         os.mkdir("./resize" + label)
@@ -25,7 +24,6 @@ def resize(input_parent, input_fname, label):
 # api 用
 def api_resize(input_parent, input_fname):
     img = cv2.imread(input_parent + "/" + input_fname)
-    #img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     dst = cv2.resize(img, dsize=(100, 100))
     if not os.path.exists("./api_resize"):
         os.mkdir("./api_resize")
@@ -354,5 +352,5 @@ if __name__ == '__main__':
     print ("elapsed_time:{0}".format(elapsed_time) + "[sec]")
 
     print("=========== Prediction part #3 ===========")
-    fname = "out.jpg"
+    fname = "character_boy_normal.png"
     prediction_api(fname, weights, X_max, X_min)
